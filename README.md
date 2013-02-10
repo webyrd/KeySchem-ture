@@ -11,16 +11,24 @@ In Proceedings of the Third International Conference on Computational Creativity
 
 This code was written during the summer of 2012 by (in alphbetical order): Brittany Moore, Emilie Mitchell, Tevyn Bell, and William Byrd.
 
+To run the code, load the file '''cfgnorm-tests.scm''':
+
+'''(load "cfgnorm-tests.scm")'''
+
 Obvious TODOs:
 
 1. Clean up the code.
 
-2. Finish the analyses.
+2. Add more tests.
 
-3. Speed things up!
+3. Finish the analyses.
 
-4. Document that code.
+4. Speed things up!
 
-5. Evaluate the performance of different analysis techniques.
+5. Document that code.
 
-6. Port code to [miniKanren](http://minikanren.org/).
+6. Evaluate the performance of different analysis techniques.
+
+7. Port code to [miniKanren](http://minikanren.org/).
+
+All code tested with Petite Chez Scheme Version 8.4.
