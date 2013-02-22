@@ -1,11 +1,13 @@
 ;;; Example songs to analyze
 
-;;; leadsheet notation from page 8 of 'Automating the Explantion of
+(load "prelude.scm")
+(load "leadsheet.scm")
+
+;;; expanded, parenthesized leadsheet notation from page 8 of 'Automating the Explantion of
 ;;; Jazz Chord Progressions using Idiomatic Analysis' by Keller et al.
 (define bye-bye-blackbird
   (leadsheet
-    (section FM7 ! Gm7 C7 ! F6 ! / ! F6 ! Abo7 ! Gm7 ! C7 !)  ; what is Abo7?
-    (section Gm7 ! Gm/F$ ! Gm7/F ! C7 ! Gm7 ! C7 ! F6 ! / !)
-    (section F7 ! E7 ! Eb7 ! D7 ! Gm7 Gm/F$ ! Gm7/F Gm/A ! Gm7 ! C7 !)
-    (section FM6 ! Gm7 C7 ! F6 ! Am7b5 D7 ! Gm7 ! C7 ! F6 ! Gm7 C7 !)))
-
+     (section (measure FM7) (measure Gm7 C7) (measure F6) (measure F6) (measure F6) (measure Abo7) (measure  Gm7) (measure C7)) ; what is Abo7?
+     (section (measure Gm7) (measure Gm/F$) (measure Gm7/F) (measure C7) (measure Gm7) (measure C7) (measure F6) (measure F6))
+     (section (measure F7) (measure E7) (measure Eb7) (measure D7) (measure Gm7 Gm/F$) (measure Gm7/F Gm/A) (measure Gm7) (measure C7))
+     (section (measure FM6) (measure Gm7 C7) (measure F6) (measure Am7b5 D7) (measure Gm7) (measure C7) (measure F6) (measure Gm7 C7))))
