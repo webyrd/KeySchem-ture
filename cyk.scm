@@ -80,20 +80,23 @@
       (let ([M^ (length (memv X V))])
         (add1 (- M M^))))))
 
-;;; make-chart now fills with #f
 (define make-chart
   (lambda (n m p)
     (vector-map
-     (lambda (x)
-       (vector-map
-        (lambda (x)
-          (make-vector p '#f))
-        (make-vector m #f)))
-     (make-vector n #f))))
+      (lambda (x)
+        (vector-map
+          (lambda (x)
+            (make-vector p #f))
+          (make-vector m #f)))
+      (make-vector n #f))))
 
 (define lookup-chart
   (lambda (chart n m p)
     (vector-ref (vector-ref (vector-ref chart n) m) p)))
+
+(define get-chart-bricks
+  (lambda (chart n m)
+    (vector->list (vector-ref (vector-ref chart n) m))))
 
 (define update-chart!
   (lambda (chart n m p v)
