@@ -111,14 +111,3 @@
                     (if (null? ls) #f ls)))
                 (cdr (iota (add1 (- (vector-length chart) i))))))
          (reverse (cdr (iota (vector-length chart)))))))
-
-#!eof
-; Autumn-Leaves-Opening (with overrun)
-; (brick Straight-Approach C 1) (chord C 1) (chord F 1) (brick Sad-Cadence A 4)
-; (brick Straight-Approach C 1) (chord C 1) (chord F 1) (brick Sad-Cadence A 4)
-;(chord Dm7 1) (chord G7 1) (chord C 1) (chord F 1) (chord Bm7b5 1) (chord E7 1) (chord Am 2)
-; (chord Dm7 1) (chord G7 1) (chord C 1) (chord F 1) (chord Dm7b5 1) (chord G7 1) (chord Cm 2)
-
-(define simple-bricks-sentence '(Dm7 G7 C F Bm7b5 E7 Am))
-(define simple-bricks-parse (cyk-parse simple-bricks-sentence normalized-bricks-cfg))
-(define formatted-simple-bricks-parse (pretty-print-chart simple-bricks-parse))

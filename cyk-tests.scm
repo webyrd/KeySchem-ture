@@ -72,23 +72,26 @@
 (define fake-formatted-simple-bricks-parse (pretty-print-chart fake-simple-bricks-parse))
 (define pretty-fake-formatted-simple-bricks-parse (prettify-object fake-formatted-simple-bricks-parse))
 (test 'fake-formatted-simple-bricks-parse
-  (and (memp (lambda (x) (equal-modulo-genny? x '((Autumn-Leaves-Opening_withoverrun
-                  ->
-                  (Straight-Approach -> (U.2002 -> Dm7) (U.2003 -> G7))
-                  (A.261
-                   ->
-                   (U.264 -> C)
-                   (A.263
+  (and (memp (lambda (x)
+               (equal-modulo-genny?
+                 x
+                 '((Autumn-Leaves-Opening_withoverrun
                     ->
-                    (U.265 -> F)
-                    (Sad-Cadence
+                    (Straight-Approach -> (U.2002 -> Dm7) (U.2003 -> G7))
+                    (A.261
                      ->
-                     (Sad-Approach -> (U.1746 -> Dm7b5) (U.1747 -> G7))
-                     (U.1749 -> Cm))))))))  
-               (map (lambda (k) (let ([v (lookup-chart fake-simple-bricks-parse 1 7 k)])
-                             (let ([pv (prettify-object v)])
-                               pv)))
-                    (iota (vector-length (vector-ref (vector-ref fake-simple-bricks-parse 1) 7)))))
+                     (U.264 -> C)
+                     (A.263
+                      ->
+                      (U.265 -> F)
+                      (Sad-Cadence
+                       ->
+                       (Sad-Approach -> (U.1746 -> Dm7b5) (U.1747 -> G7))
+                       (U.1749 -> Cm))))))))  
+             (map (lambda (k) (let ([v (lookup-chart fake-simple-bricks-parse 1 7 k)])
+                           (let ([pv (prettify-object v)])
+                             pv)))
+                  (iota (vector-length (vector-ref (vector-ref fake-simple-bricks-parse 1) 7)))))
        #t)
   #t)
 
@@ -100,3 +103,17 @@
 (define blue-moon-beginning-parse (cyk-parse blue-moon-beginning normalized-bricks-cfg))
 (define formatted-blue-moon-beginning-parse (pretty-print-chart blue-moon-beginning-parse))
 (define pretty-formatted-blue-moon-beginning-parse (prettify-object formatted-blue-moon-beginning-parse))
+
+
+
+
+#!eof
+; Autumn-Leaves-Opening (with overrun)
+; (brick Straight-Approach C 1) (chord C 1) (chord F 1) (brick Sad-Cadence A 4)
+; (brick Straight-Approach C 1) (chord C 1) (chord F 1) (brick Sad-Cadence A 4)
+;(chord Dm7 1) (chord G7 1) (chord C 1) (chord F 1) (chord Bm7b5 1) (chord E7 1) (chord Am 2)
+; (chord Dm7 1) (chord G7 1) (chord C 1) (chord F 1) (chord Dm7b5 1) (chord G7 1) (chord Cm 2)
+
+(define simple-bricks-sentence '(Dm7 G7 C F Bm7b5 E7 Am))
+(define simple-bricks-parse (cyk-parse simple-bricks-sentence normalized-bricks-cfg))
+(define formatted-simple-bricks-parse (pretty-print-chart simple-bricks-parse))
