@@ -96,7 +96,7 @@
 
 (define get-chart-bricks
   (lambda (chart n m)
-    (vector->list (vector-ref (vector-ref chart n) m))))
+    (filter (lambda (x) x) (vector->list (vector-ref (vector-ref chart n) m)))))
 
 (define update-chart!
   (lambda (chart n m p v)

@@ -1,6 +1,8 @@
 (load "prelude.scm")
 (load "my-dictionary.scm")
 
+(define INFINITE-COST 9999999)
+
 (define brick-cost-ls
 ;;; Taken from Table 4 of 'Automating the Explanation of Jazz Chord
 ;;; Progressions using Idiomatic Analysis' by Keller et al.
@@ -25,7 +27,7 @@
     (let ([bt (brick->brick-type brick)])
       (cond
         [(assq bt brick-cost-ls) => cdr]
-        [else (error 'brick-name (format "Unknown brick type: ~s" bt))]))))
+        [else (error 'brick-cost (format "Unknown brick type: ~s" bt))]))))
 
 (define make-mins
   (lambda (n)
@@ -52,14 +54,16 @@
        (node-cost n)]
       [(node ,n1 ,n2)
        (+ (node-cost n1) (node-cost n2))]
-      [,n (brick-cost n)])))
+      [,b (brick-cost b)])))
 
 (define find-cheapest-brick
   (lambda (ls)
-    (let ([bc-ls (map brick-cost ls)])
-      (let ([m (apply min bc-ls)])
-        (let ([pos (- (length ls) (length (memv m bc-ls)))])
-          (list-ref ls pos))))))
+    (if (null? ls)
+        INFINITE-COST
+        (let ([bc-ls (map brick-cost ls)])
+          (let ([m (apply min bc-ls)])
+            (let ([pos (- (length ls) (length (memv m bc-ls)))])
+              (list-ref ls pos)))))))
 
 (define minimum-cost-parse
   (lambda (cyk-table)
@@ -67,24 +71,25 @@
       (let ([mins (make-mins len)])
         (for (row 0 (sub1 len))
           (for (col row (sub1 len))
-            (let ([nodes (get-chart-bricks cyk-table row col)])
-              (let ([cn (find-cheapest-node)])
-                (update-mins! mins row col `(node ,cn)))))))
-      (let loop ([i (sub1 len)])
-        (cond
-          [(zero? i) (void)]
-          [else
-           (for (j (add1 i) (sub1 len))
-             (for (k (add1 i) j)
-               (let ([n_ij (get-mins mins i j)]
-                     [n_ik-1 (get-mins mins i (sub1 k))]
-                     [n_kj (get-mins mins k j)])
-                 (let ([c_ij (node-cost n_ij)]
-                       [c_ik-1 (node-cost c_ik-1)]
-                       [c_kj (node-cost c_kj)])
-                   (when (< (+ c_ik-1 c_kj) c_ij)
-                     (update-mins! mins i j `(node ,n_ik-1 ,n_kj)))))))
-           (loop (sub1 i))])))))
+            (let ([br (get-chart-bricks cyk-table row col)])
+              (let ([cn (find-cheapest-brick br)])
+                (update-mins! mins row col `(node ,cn))))))
+        (let loop ([i (sub1 len)])
+          (cond
+            [(zero? i) (void)]
+            [else
+             (for (j (add1 i) (sub1 len))
+               (for (k (add1 i) j)
+                 (let ([n_ij (get-mins mins i j)]
+                       [n_ik-1 (get-mins mins i (sub1 k))]
+                       [n_kj (get-mins mins k j)])
+                   (let ([c_ij (node-cost n_ij)]
+                         [c_ik-1 (node-cost c_ik-1)]
+                         [c_kj (node-cost c_kj)])
+                     (when (< (+ c_ik-1 c_kj) c_ij)
+                       (update-mins! mins i j `(node ,n_ik-1 ,n_kj)))))))
+             (loop (sub1 i))]))
+        mins))))
 
 (test 'brick-cost-Cadence
   (brick-cost Amen-Cadence)
