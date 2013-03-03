@@ -127,6 +127,11 @@
     (unless (brick? x) (error 'brick->brick-name "not a brick"))
     (cadr x)))
 
+(define brick->brick-type
+  (lambda (x)
+    (unless (brick? x) (error 'brick->brick-name "not a brick"))
+    (list-ref x 4)))
+
 (define prettify-object
   (lambda (x)
     (cond
